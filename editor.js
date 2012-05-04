@@ -89,6 +89,15 @@ function lerp(low, high, percent){
 	return low + (high - low) * percent;
 }
 
+function extendCanvasContext(ctx){
+  ctx.fillCircle = function(x,y,radius){
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2*Math.PI, true);
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
 //
 //  Update the scene
 //

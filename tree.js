@@ -6,7 +6,7 @@ var ctx, canvasWidth, canvasHeight;
 
 function drawScene (canvas) {
     ctx = canvas.getContext("2d");
-    //extendCanvasConrext(ctx);
+    extendCanvasContext(ctx);
 
     canvasWidth = parseInt(canvas.getAttribute("width"));
     canvasHeight = parseInt(canvas.getAttribute("height"));
@@ -128,7 +128,7 @@ function drawBlossoms (blossomPoints) {
 
 
             ctx.fillStyle = colors[Math.floor(random(0,colors.length))];
-            ctx.fillRect(x, y, 5,5); //fillCircle
+            ctx.fillCircle(x, y, 5);
         }
     }
 
