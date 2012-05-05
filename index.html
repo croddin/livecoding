@@ -3,10 +3,10 @@
   <head>
     <title>Live Coding</title>
     <style>
-      html{height:90%;}
-      body{background-color:#eee;height:100%;}
+      html{height:100%;width:100%;position:fixed;}
+      body{background:#ddd;height:100%;}
       .column{float:left;width:48%;padding:1%;height:100%;}
-      textarea,iframe{width:100%;height:100%;background-color:white;}
+      #code, iframe{width:100%;height:100%;background:white;position:relative;}
     </style>
   </head>
   <body>
@@ -14,15 +14,37 @@
       <canvas id="canvas" width="600" height="600">
     </div>
     <div class="column">
-      <textarea id="code" onkeyup="update();"></textarea>
+      <div id="code"></div>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="http://ajaxorg.github.com/ace/build/src/ace-uncompressed.js"></script>
+    <script src="http://ajaxorg.github.com/ace/build/src/theme-textmate.js"></script>
+    <script src="http://ajaxorg.github.com/ace/build/src/mode-javascript.js"></script>
     <script src="editor.js"></script>
     <script>
-      $('#code').load('tree.js', function(){
+    
+    function update(){
+      var start = Date.now()
+    	eval(editor.getSession().getValue())
+    	resetRandom();
+    	if( typeof drawScene === 'function'){
+    	  drawScene(document.getElementById('canvas'));
+    	}
+    	var end = Date.now()
+    	console.log("Rendering:", end - start );
+    }
+    
+    window.editor = ace.edit("code");
+    editor.setTheme("ace/theme/textmate");
+    var JSMode = require("ace/mode/javascript").Mode;
+    editor.getSession().setMode(new JSMode())
+    editor.getSession().on('change', function(){
         update();
-        $('#code').keyup(update);
-      })
+    });
+
+    $.get('tree.js',function(src){
+      editor.getSession().setValue(src);
+    })
     </script>
   </body>
 </html>

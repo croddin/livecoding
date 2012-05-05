@@ -97,15 +97,3 @@ function extendCanvasContext(ctx){
     ctx.closePath();
   }
 }
-
-//
-//  Update the scene
-//
-function update(){
-	eval($('#code').val())
-	resetRandom();
-	var start = Date.now()
-	drawScene(document.getElementById('canvas'));
-	var end = Date.now()
-	console.log("Rendering:", end - start );
-}
