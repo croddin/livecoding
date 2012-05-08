@@ -24,14 +24,19 @@
     <script>
     
     function update(){
-      var start = Date.now()
-    	eval(editor.getSession().getValue())
-    	resetRandom();
-    	if( typeof drawScene === 'function'){
-    	  drawScene(document.getElementById('canvas'));
-    	}
-    	var end = Date.now()
-    	console.log("Rendering:", end - start );
+      try{
+        var start = Date.now()
+      	eval(editor.getSession().getValue())
+        resetRandom();
+        if( typeof drawScene === 'function'){
+            setTimeout(function(){
+              drawScene(document.getElementById('canvas'));
+            }, 1);
+        }
+        var end = Date.now()
+        console.log("Rendering:", end - start );
+      } catch(e){}
+
     }
     
     window.editor = ace.edit("code");
