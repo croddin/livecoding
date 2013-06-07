@@ -16,17 +16,15 @@
     <div class="column">
       <div id="code"></div>
     </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="http://ajaxorg.github.com/ace/build/src/ace-uncompressed.js"></script>
-    <script src="http://ajaxorg.github.com/ace/build/src/theme-textmate.js"></script>
-    <script src="http://ajaxorg.github.com/ace/build/src/mode-javascript.js"></script>
-    <script src="editor.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
+    <script src="http://croddin.github.io/livecoding/editor.js"></script>
     <script>
     
     function update(){
       try{
         var start = Date.now()
-      	eval(editor.getSession().getValue())
+          eval(editor.getSession().getValue())
         resetRandom();
         if( typeof drawScene === 'function'){
             setTimeout(function(){
@@ -36,16 +34,12 @@
         var end = Date.now()
         console.log("Rendering:", end - start );
       } catch(e){}
-
     }
     
-    window.editor = ace.edit("code");
+    editor = ace.edit("code");
     editor.setTheme("ace/theme/textmate");
-    var JSMode = require("ace/mode/javascript").Mode;
-    editor.getSession().setMode(new JSMode())
-    editor.getSession().on('change', function(){
-        update();
-    });
+    editor.getSession().setMode("ace/mode/javascript")
+    editor.getSession().on('change', update);
 
     $.get('tree.js',function(src){
       editor.getSession().setValue(src);
